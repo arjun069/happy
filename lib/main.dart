@@ -7,7 +7,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Happily',
+      title: 'happy.ly',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -21,7 +21,7 @@ class Homepage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Homepage'),
+        title: Text('happy.ly'),
       ),
       body: Center(
           child: FloatingActionButton.extended(
@@ -58,21 +58,32 @@ class FirstQuestion extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-              FloatingActionButton.extended(
-                heroTag: "Good",
-                onPressed: (){
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SecondQuestion()),
-              );
-              },
-                label: Text("Good"),
+              Container(
+                width: 100,
+                child: FloatingActionButton.extended(
+                  heroTag: "Good",
+                  onPressed: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => FirstQuestionGood()),
+                );
+                },
+                  label: Text("Good"),
+                ),
               ),
               SizedBox(width: 10),
-              FloatingActionButton.extended(
-                heroTag: "Bad",
-                onPressed: (){Navigator.pop(context);},
-                label: Text("Bad"),
+              Container(
+                width: 100,
+                child: FloatingActionButton.extended(
+                  heroTag: "Bad",
+                  onPressed: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => FirstQuestionBad()),
+                );
+                },
+                  label: Text("Bad"),
+                ),
               ),
             ],),
         ],)
@@ -80,255 +91,332 @@ class FirstQuestion extends StatelessWidget {
   }
 }
 
-class SecondQuestion extends StatelessWidget {
+class FirstQuestionGood extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _FirstQuestionGoodState();
+  }
+}
+
+class _FirstQuestionGoodState extends State<FirstQuestionGood> {
+  int radioValue = 0;
+  List<String> _a = ['Education', 'Relationship', 'Work'];
+  int disp = 0;
+
+  void handleRadioValueChanged(int value) {
+    setState(() {
+      radioValue = value;
+
+      if(radioValue == _a.length) {
+        disp = 0;
+      } else {
+        disp = 1;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Question 2"),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            AutoSizeText(
-              'How was your day?',
-              style: TextStyle(fontSize: 25),
-              maxLines: 2,
-            ),
-            SizedBox(height: 50),
-            Row(
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(title: Text('Question 2')),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              AutoSizeText(
+                  'Why was your day good?',
+                  style: TextStyle(fontSize: 25),
+                  maxLines: 2,
+                ),
+              SizedBox(height: 50,),
+              Column(children: _a
+                .map((elem) => Row(
+                    children: <Widget>[
+                      SizedBox(width: 60),
+                      Radio(
+                        value: _a.indexOf(elem),
+                        groupValue: radioValue,
+                        onChanged: handleRadioValueChanged,
+                      ),
+                      AutoSizeText(
+                        elem,
+                        style: TextStyle(fontSize: 20),
+                        maxLines: 2,
+                      ),
+                    ],
+                  )
+                ).toList(),),
+              SizedBox(height: 20,),
+              Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-              FloatingActionButton.extended(
-                heroTag: "Good",
-                onPressed: (){
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => ThirdQuestion()),
-              );
-              },
-                label: Text("Good"),
-              ),
-              SizedBox(width: 10),
-              FloatingActionButton.extended(
-                heroTag: "Bad",
-                onPressed: (){Navigator.pop(context);},
-                label: Text("Bad"),
-              ),
+              Container(
+                width: 100,
+                child: FloatingActionButton.extended(
+                  heroTag: "Ok",
+                  onPressed: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SecondQuestion()),
+                );
+                },
+                  label: Text("Ok"),
+                ),
+              ),              
             ],),
-        ],)
-    ));
+        ],),)
+      ),
+    );
   }
 }
 
-class ThirdQuestion extends StatelessWidget {
+class FirstQuestionBad extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _FirstQuestionBadState();
+  }
+}
+
+class _FirstQuestionBadState extends State<FirstQuestionBad> {
+  int radioValue = 0;
+  List<String> _a = ['Education', 'Relationship', 'Work'];
+  int disp = 0;
+
+  void handleRadioValueChanged(int value) {
+    setState(() {
+      radioValue = value;
+
+      if(radioValue == _a.length) {
+        disp = 0;
+      } else {
+        disp = 1;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Question 3"),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            AutoSizeText(
-              'How was your day?',
-              style: TextStyle(fontSize: 25),
-              maxLines: 2,
-            ),
-            SizedBox(height: 50),
-            Row(
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(title: Text('Question 2')),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              AutoSizeText(
+                  'Why was your day bad?',
+                  style: TextStyle(fontSize: 25),
+                  maxLines: 2,
+                ),
+              SizedBox(height: 50,),
+              Column(children: _a
+                .map((elem) => Row(
+                    children: <Widget>[
+                      SizedBox(width: 60),
+                      Radio(
+                        value: _a.indexOf(elem),
+                        groupValue: radioValue,
+                        onChanged: handleRadioValueChanged,
+                      ),
+                      AutoSizeText(
+                        elem,
+                        style: TextStyle(fontSize: 20),
+                        maxLines: 2,
+                      ),
+                    ],
+                  )
+                ).toList(),),
+              SizedBox(height: 20,),
+              Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-              FloatingActionButton.extended(
-                heroTag: "Good",
-                onPressed: (){
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => FourthQuestion()),
-              );
-              },
-                label: Text("Good"),
-              ),
-              SizedBox(width: 10),
-              FloatingActionButton.extended(
-                heroTag: "Bad",
-                onPressed: (){Navigator.pop(context);},
-                label: Text("Bad"),
-              ),
+              Container(
+                width: 100,
+                child: FloatingActionButton.extended(
+                  heroTag: "Ok",
+                  onPressed: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SecondQuestion()),
+                );
+                },
+                  label: Text("Ok"),
+                ),
+              ),              
             ],),
-        ],)
-    ));
+        ],),)
+      ),
+    );
   }
 }
 
-class FourthQuestion extends StatelessWidget {
+class SecondQuestion extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _SecondQuestionState();
+  }
+}
+
+class _SecondQuestionState extends State<SecondQuestion> {
+  int radioValue = 0;
+  List<String> _a = ["Happy", "Blessed", "Confused", "Stressed", "Angry", "Low"];
+  int disp = 0;
+
+  void handleRadioValueChanged(int value) {
+    setState(() {
+      radioValue = value;
+
+      if(radioValue == _a.length) {
+        disp = 0;
+      } else {
+        disp = 1;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Question 4"),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            AutoSizeText(
-              'How was your day?',
-              style: TextStyle(fontSize: 25),
-              maxLines: 2,
-            ),
-            SizedBox(height: 50),
-            Row(
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(title: Text('Question 3')),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+                AutoSizeText(
+                  'How did you feel throughout the',
+                  style: TextStyle(fontSize: 25),
+                  maxLines: 2,
+                ),
+                
+                AutoSizeText(
+                  'day?',
+                  style: TextStyle(fontSize: 25),
+                  maxLines: 2,
+                ),
+              SizedBox(height: 50,),
+              Column(children: _a
+                .map((elem) => Row(
+                    children: <Widget>[
+                      SizedBox(width: 60),
+                      Radio(
+                        value: _a.indexOf(elem),
+                        groupValue: radioValue,
+                        onChanged: handleRadioValueChanged,
+                      ),
+                      AutoSizeText(
+                        elem,
+                        style: TextStyle(fontSize: 20),
+                        maxLines: 2,
+                      ),
+                    ],
+                  )
+                ).toList(),),
+              SizedBox(height: 20,),
+              Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-              FloatingActionButton.extended(
-                heroTag: "Good",
-                onPressed: (){
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => FifthQuestion()),
-              );
-              },
-                label: Text("Good"),
-              ),
-              SizedBox(width: 10),
-              FloatingActionButton.extended(
-                heroTag: "Bad",
-                onPressed: (){Navigator.pop(context);},
-                label: Text("Bad"),
-              ),
+              Container(
+                width: 100,
+                child: FloatingActionButton.extended(
+                  heroTag: "Ok",
+                  onPressed: (){
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ThirdQuestion()),
+                );
+                },
+                  label: Text("Ok"),
+                ),
+              ),              
             ],),
-        ],)
-    ));
+        ],),)
+      ),
+    );
   }
 }
 
-class FifthQuestion extends StatelessWidget {
+class ThirdQuestion extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _ThirdQuestionState();
+  }
+}
+
+class _ThirdQuestionState extends State<ThirdQuestion> {
+  int radioValue = 0;
+  List<String> _a = ["Values", "Mentor", "Collegue", "Teammate"];
+  int disp = 0;
+
+  void handleRadioValueChanged(int value) {
+    setState(() {
+      radioValue = value;
+
+      if(radioValue == _a.length) {
+        disp = 0;
+      } else {
+        disp = 1;
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Question 5"),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            AutoSizeText(
-              'How was your day?',
-              style: TextStyle(fontSize: 25),
-              maxLines: 2,
-            ),
-            SizedBox(height: 50),
-            Row(
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(title: Text('Question 4')),
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+                AutoSizeText(
+                  'What makes a good friend?',
+                  style: TextStyle(fontSize: 25),
+                  maxLines: 2,
+                ),
+              SizedBox(height: 50,),
+              Column(children: _a
+                .map((elem) => Row(
+                    children: <Widget>[
+                      SizedBox(width: 60),
+                      Radio(
+                        value: _a.indexOf(elem),
+                        groupValue: radioValue,
+                        onChanged: handleRadioValueChanged,
+                      ),
+                      AutoSizeText(
+                        elem,
+                        style: TextStyle(fontSize: 20),
+                        maxLines: 2,
+                      ),
+                    ],
+                  )
+                ).toList(),),
+              SizedBox(height: 20,),
+              Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-              FloatingActionButton.extended(
-                heroTag: "Good",
-                onPressed: (){
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => SecondQuestion()),
-              );
-              },
-                label: Text("Good"),
+              Container(
+                width: 200,
+                child: FloatingActionButton.extended(
+                  heroTag: "1",
+                  onPressed: (){},
+                  label: Text("Good day to you!"),
+                ),
               ),
-              SizedBox(width: 10),
-              FloatingActionButton.extended(
-                heroTag: "Bad",
-                onPressed: (){Navigator.pop(context);},
-                label: Text("Bad"),
-              ),
+              SizedBox(width: 10,),
+              Container(
+                width: 200,
+                child: FloatingActionButton.extended(
+                  heroTag: "2",
+                  onPressed: (){},
+                  label: Text("Conference call"),
+                ),
+              ),              
             ],),
-        ],)
-    ));
+        ],),)
+      ),
+    );
   }
 }
-
-// class MyHomePage extends StatefulWidget {
-//   MyHomePage({Key key, this.title}) : super(key: key);
-
-//   // This widget is the home page of your application. It is stateful, meaning
-//   // that it has a State object (defined below) that contains fields that affect
-//   // how it looks.
-
-//   // This class is the configuration for the state. It holds the values (in this
-//   // case the title) provided by the parent (in this case the App widget) and
-//   // used by the build method of the State. Fields in a Widget subclass are
-//   // always marked "final".
-
-//   final String title;
-
-//   @override
-//   _MyHomePageState createState() => _MyHomePageState();
-// }
-
-// class _MyHomePageState extends State<MyHomePage> {
-//   int _counter = 0;
-
-//   void _incrementCounter() {
-//     setState(() {
-//       // This call to setState tells the Flutter framework that something has
-//       // changed in this State, which causes it to rerun the build method below
-//       // so that the display can reflect the updated values. If we changed
-//       // _counter without calling setState(), then the build method would not be
-//       // called again, and so nothing would appear to happen.
-//       _counter++;
-//     });
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     // This method is rerun every time setState is called, for instance as done
-//     // by the _incrementCounter method above.
-//     //
-//     // The Flutter framework has been optimized to make rerunning build methods
-//     // fast, so that you can just rebuild anything that needs updating rather
-//     // than having to individually change instances of widgets.
-//     return Scaffold(
-//       appBar: AppBar(
-//         // Here we take the value from the MyHomePage object that was created by
-//         // the App.build method, and use it to set our appbar title.
-//         title: Text(widget.title),
-//       ),
-//       body: Center(
-//         // Center is a layout widget. It takes a single child and positions it
-//         // in the middle of the parent.
-//         child: Column(
-//           // Column is also layout widget. It takes a list of children and
-//           // arranges them vertically. By default, it sizes itself to fit its
-//           // children horizontally, and tries to be as tall as its parent.
-//           //
-//           // Invoke "debug painting" (press "p" in the console, choose the
-//           // "Toggle Debug Paint" action from the Flutter Inspector in Android
-//           // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-//           // to see the wireframe for each widget.
-//           //
-//           // Column has various properties to control how it sizes itself and
-//           // how it positions its children. Here we use mainAxisAlignment to
-//           // center the children vertically; the main axis here is the vertical
-//           // axis because Columns are vertical (the cross axis would be
-//           // horizontal).
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: <Widget>[
-//             Text(
-//               'You have pushed the button this many times:',
-//             ),
-//             Text(
-//               '$_counter',
-//               style: Theme.of(context).textTheme.display1,
-//             ),
-//           ],
-//         ),
-//       ),
-//       floatingActionButton: FloatingActionButton(
-//         onPressed: _incrementCounter,
-//         tooltip: 'Increment',
-//         child: Icon(Icons.add),
-//       ), // This trailing comma makes auto-formatting nicer for build methods.
-//     );
-//   }
-// }
